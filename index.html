@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
-<head>
+<html lang="th"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plearn Exam — คลังข้อสอบเพลินพัฒนา</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Plearn Exam</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&amp;family=Sarabun:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
 :root {
   --c1:#12332f; --c2:#0f766e; --c3:#14b8a6; --c4:#2dd4bf; --c5:#fde68a; --c6:#ccfbf1;
@@ -320,6 +319,7 @@ table tr:hover td { background:var(--surf2); }
 .settings-wrap { max-width:620px; margin:0 auto; padding:40px 24px; }
 .settings-card { background:var(--surf); border-radius:var(--r); box-shadow:var(--sh); border:1px solid var(--border); padding:28px 28px; margin-bottom:18px; }
 .settings-card h3 { font-size:16px; font-weight:700; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
+.admin-note { background:#f0fdfa; border:1px solid #99f6e4; color:#115e59; border-radius:var(--r3); padding:12px 14px; font-size:13px; line-height:1.6; margin-bottom:14px; }
 
 /* ─── PAGINATION ─── */
 .pag { display:flex; justify-content:center; gap:8px; margin-top:28px; flex-wrap:wrap; }
@@ -387,13 +387,13 @@ table tr:hover td { background:var(--surf2); }
   <div class="nav-links" id="navLinks">
     <button class="nav-link" onclick="go('home')">หน้าแรก</button>
     <button class="nav-link" onclick="go('exams')">คลังข้อสอบ</button>
-    <span id="navGuest">
+    <span id="navGuest" style="display: none;">
       <button class="nav-link pri" onclick="openM('loginM')">เข้าสู่ระบบ</button>
     </span>
-    <span id="navUser" style="display:none">
+    <span id="navUser" style="display: inline-flex; align-items: center; gap: 4px;">
       <button class="nav-link" onclick="go('profile')">โปรไฟล์</button>
-      <button class="nav-link" id="navAdmin" style="display:none" onclick="go('admin')">⚙️ Admin</button>
-      <div class="nav-avatar" id="navAv" onclick="go('profile')">U</div>
+      <button class="nav-link" id="navAdmin" style="" onclick="go('admin')">⚙️ Admin</button>
+      <div class="nav-avatar" id="navAv" onclick="go('profile')">A</div>
       <button class="nav-link" onclick="logout()" style="color:#fca5a5">ออก</button>
     </span>
   </div>
@@ -414,15 +414,15 @@ table tr:hover td { background:var(--surf2); }
       <input type="text" id="homeQ" placeholder="ค้นหาข้อสอบ เช่น คณิตศาสตร์, ภาษาไทย, TGAT..." onkeydown="if(event.key==='Enter')hs()">
       <button class="search-btn" onclick="hs()">🔍</button>
     </div>
-    <div class="hero-stats" id="heroStats">
+    <div class="hero-stats" id="heroStats" style="display: flex;">
       <div class="hs"><strong id="st1">0</strong><span>ข้อสอบ</span></div>
-      <div class="hs"><strong id="st2">0</strong><span>สมาชิก</span></div>
+      <div class="hs"><strong id="st2">3</strong><span>สมาชิก</span></div>
       <div class="hs"><strong id="st3">0</strong><span>ดาวน์โหลด</span></div>
     </div>
   </div>
   <div class="section">
     <div class="sec-title" style="margin-bottom:18px">หมวดหมู่</div>
-    <div class="cats-wrap" id="homeCats"></div>
+    <div class="cats-wrap" id="homeCats"><div class="cat-pill">📐 คณิตศาสตร์</div><div class="cat-pill">🔬 วิทยาศาสตร์</div><div class="cat-pill">🇬🇧 ภาษาอังกฤษ</div><div class="cat-pill">📖 ภาษาไทย</div><div class="cat-pill">🌏 สังคมศึกษา</div><div class="cat-pill">📋 ทั่วไป</div></div>
     <div class="sec-hdr">
       <div class="sec-title">ข้อสอบที่นักเรียนใช้บ่อย</div>
       <button class="see-all" onclick="go('exams')">ดูทั้งหมด →</button>
@@ -523,28 +523,28 @@ table tr:hover td { background:var(--surf2); }
     <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sb-brand">Admin Panel</div>
-      <div class="sb-item on" id="sb-dash" onclick="atab('dash')"><span>📊</span> Dashboard</div>
+      <div class="sb-item" id="sb-dash" onclick="atab('dash')"><span>📊</span> Dashboard</div>
       <div class="sb-item" id="sb-manage" onclick="atab('manage')"><span>📚</span> จัดการข้อสอบ</div>
       <div class="sb-item" id="sb-cats" onclick="atab('cats')"><span>📁</span> หมวดหมู่</div>
       <div class="sb-item" id="sb-users" onclick="atab('users')"><span>👥</span> สมาชิก</div>
       <hr class="sb-sep">
-      <div class="sb-item" id="sb-site" onclick="atab('site')"><span>⚙️</span> ตั้งค่าเว็บ</div>
+      <div class="sb-item on" id="sb-site" onclick="atab('site')"><span>⚙️</span> ตั้งค่าเว็บ</div>
     </div>
     <!-- MAIN -->
     <div class="admin-main">
 
       <!-- DASHBOARD -->
-      <div id="ac-dash">
+      <div id="ac-dash" style="display: none;">
         <h2>📊 Dashboard</h2>
-        <div class="stats-grid" id="statsGrid"></div>
+        <div class="stats-grid" id="statsGrid"><div class="stat-card"><div class="sv">0</div><div class="sk">ข้อสอบทั้งหมด</div></div><div class="stat-card"><div class="sv">3</div><div class="sk">สมาชิก</div></div><div class="stat-card"><div class="sv">0</div><div class="sk">ดาวน์โหลดรวม</div></div><div class="stat-card"><div class="sv">0</div><div class="sk">มีไฟล์ PDF</div></div><div class="stat-card"><div class="sv">6</div><div class="sk">หมวดหมู่</div></div></div>
         <div class="tbl-wrap">
           <div class="tbl-head"><span class="tbl-title">ข้อสอบยอดนิยม</span></div>
-          <table id="dashTbl"></table>
+          <table id="dashTbl"><tbody><tr><th>ชื่อข้อสอบ</th><th>วิชา</th><th>ปี</th><th>PDF</th><th>ดาวน์โหลด</th></tr></tbody></table>
         </div>
       </div>
 
       <!-- MANAGE EXAMS -->
-      <div id="ac-manage" style="display:none">
+      <div id="ac-manage" style="display: none;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
           <h2 style="margin:0">📚 จัดการข้อสอบ</h2>
           <button class="btn btn-primary" onclick="openAddExam()">➕ เพิ่มข้อสอบ</button>
@@ -552,31 +552,31 @@ table tr:hover td { background:var(--surf2); }
         <div class="search-bar-wrap">
           <input type="text" id="manageQ" placeholder="ค้นหาข้อสอบ..." oninput="renderManage()">
         </div>
-        <div class="tbl-wrap"><table id="manageTbl"></table></div>
+        <div class="tbl-wrap"><table id="manageTbl"><tbody><tr><th>ชื่อข้อสอบ</th><th>วิชา</th><th>ปี</th><th>ข้อ</th><th>PDF</th><th>DL</th><th>จัดการ</th></tr></tbody></table></div>
       </div>
 
       <!-- CATEGORIES -->
-      <div id="ac-cats" style="display:none">
+      <div id="ac-cats" style="display: none;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
           <h2 style="margin:0">📁 จัดการหมวดหมู่</h2>
           <button class="btn btn-primary" onclick="openM('catM')">➕ เพิ่มหมวดหมู่</button>
         </div>
-        <div class="tbl-wrap"><table id="catsTbl"></table></div>
+        <div class="tbl-wrap"><table id="catsTbl"><tbody><tr><th>อีโมจิ</th><th>ชื่อ</th><th>ข้อสอบ</th><th>จัดการ</th></tr><tr><td style="font-size:20px">📐</td><td>คณิตศาสตร์</td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="editCat(1)">✏️</button><button class="btn btn-xs btn-danger" onclick="confirmDelCat(1)">🗑️</button></div></td></tr><tr><td style="font-size:20px">🔬</td><td>วิทยาศาสตร์</td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="editCat(2)">✏️</button><button class="btn btn-xs btn-danger" onclick="confirmDelCat(2)">🗑️</button></div></td></tr><tr><td style="font-size:20px">🇬🇧</td><td>ภาษาอังกฤษ</td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="editCat(3)">✏️</button><button class="btn btn-xs btn-danger" onclick="confirmDelCat(3)">🗑️</button></div></td></tr><tr><td style="font-size:20px">📖</td><td>ภาษาไทย</td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="editCat(4)">✏️</button><button class="btn btn-xs btn-danger" onclick="confirmDelCat(4)">🗑️</button></div></td></tr><tr><td style="font-size:20px">🌏</td><td>สังคมศึกษา</td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="editCat(5)">✏️</button><button class="btn btn-xs btn-danger" onclick="confirmDelCat(5)">🗑️</button></div></td></tr><tr><td style="font-size:20px">📋</td><td>ทั่วไป</td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="editCat(6)">✏️</button><button class="btn btn-xs btn-danger" onclick="confirmDelCat(6)">🗑️</button></div></td></tr></tbody></table></div>
       </div>
 
       <!-- USERS -->
-      <div id="ac-users" style="display:none">
+      <div id="ac-users" style="display: none;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
           <h2 style="margin:0">👥 สมาชิก</h2>
         </div>
         <div class="search-bar-wrap">
           <input type="text" id="userQ" placeholder="ค้นหาสมาชิก..." oninput="renderUsers()">
         </div>
-        <div class="tbl-wrap"><table id="usersTbl"></table></div>
+        <div class="tbl-wrap"><table id="usersTbl"><tbody><tr><th>ชื่อ</th><th>อีเมล</th><th>บทบาท</th><th>ดาวน์โหลด</th><th>จัดการ</th></tr><tr><td>Admin Plearn Exam</td><td>admin@examhub.com</td><td><span class="badge badge-blue">👑 Admin</span></td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="toggleRole(1)">ลด Role</button></div></td></tr><tr><td>นักเรียน ทดสอบ</td><td>student@test.com</td><td><span class="badge badge-green">👤 สมาชิก</span></td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="toggleRole(2)">เลื่อน Admin</button><button class="btn btn-xs btn-danger" onclick="confirmDelUser(2)">🗑️</button></div></td></tr><tr><td>Pluem11</td><td>pluemfff542@gmail.com</td><td><span class="badge badge-green">👤 สมาชิก</span></td><td>0</td><td><div class="t-actions"><button class="btn btn-xs btn-outline" onclick="toggleRole(1780752754885)">เลื่อน Admin</button><button class="btn btn-xs btn-danger" onclick="confirmDelUser(1780752754885)">🗑️</button></div></td></tr></tbody></table></div>
       </div>
 
       <!-- SITE SETTINGS -->
-      <div id="ac-site" style="display:none">
+      <div id="ac-site" style="">
         <h2>⚙️ ตั้งค่าเว็บไซต์</h2>
         <div class="settings-card">
           <h3>🎨 ข้อมูลทั่วไป</h3>
@@ -604,6 +604,11 @@ table tr:hover td { background:var(--surf2); }
           <h3>📄 ข้อความ</h3>
           <div class="fg"><label>ข้อความ Hero Badge</label><input type="text" id="sBadge"></div>
           <button class="btn btn-primary" onclick="saveSite()">💾 บันทึก</button>
+        </div>
+        <div class="settings-card">
+          <h3>🚀 เผยแพร่บน GitHub Pages</h3>
+          <div class="admin-note">หลังแอดมินเพิ่ม/แก้ข้อสอบหรืออัปโหลด PDF ให้กดส่งออกไฟล์ แล้วนำไฟล์ index.html ที่ได้ไปอัปทับใน GitHub เพื่อให้ผู้ใช้ทุกคนเห็นข้อมูลล่าสุด</div>
+          <button class="btn btn-success" onclick="exportStaticSite()">⬇️ Export index.html พร้อมข้อมูล</button>
         </div>
       </div>
 
@@ -689,11 +694,12 @@ table tr:hover td { background:var(--surf2); }
       <!-- PDF UPLOAD -->
       <div class="fg">
         <label>ไฟล์ PDF</label>
+        <div class="admin-note">ไฟล์ PDF บน GitHub Pages จะเผยแพร่ให้ผู้ใช้ทุกคนเห็นหลังจาก Export index.html แล้วอัปขึ้น GitHub อีกครั้ง</div>
         <div class="upload-zone" id="uz" onclick="document.getElementById('pdfInput').click()" ondragover="uzDrag(event,true)" ondragleave="uzDrag(event,false)" ondrop="uzDrop(event)">
           <input type="file" id="pdfInput" accept="application/pdf,.pdf">
           <div style="font-size:36px">📄</div>
           <p>คลิกหรือลากไฟล์ PDF มาวางที่นี่</p>
-          <p style="font-size:11px;color:#94a3b8;margin-top:4px">รองรับ .pdf เท่านั้น · สูงสุด 20 MB</p>
+          <p style="font-size:11px;color:#94a3b8;margin-top:4px">รองรับ .pdf เท่านั้น · สูงสุด 8 MB ต่อไฟล์</p>
         </div>
         <div id="fprev" class="file-prev" style="display:none">
           <div class="fi">📄</div>
@@ -753,31 +759,83 @@ table tr:hover td { background:var(--surf2); }
 
 // ─── SAFE STORAGE ───
 var _mem={};
-function SS(k,v){try{localStorage.setItem(k,v);}catch(e){_mem[k]=v;}}
+function SS(k,v){try{localStorage.setItem(k,v);return true;}catch(e){_mem[k]=v;return false;}}
 function SG(k){try{return localStorage.getItem(k);}catch(e){return _mem[k]??null;}}
 function SR(k){try{localStorage.removeItem(k);}catch(e){delete _mem[k];}}
 
 // ─── DB ───
 var db={
-  settings:{
-    siteName:'Plearn Exam',
-    heroTitle:'คลังข้อสอบ<span>เพลินพัฒนา</span>',
-    heroSub:'รวมข้อสอบ แบบฝึกหัด และเอกสารเตรียมสอบสำหรับนักเรียนเพลินพัฒนา',
-    heroBadge:'✦ สำหรับนักเรียนเพลินพัฒนา',
-    reg:true, dlLogin:true, stats:true
+  "settings": {
+    "siteName": "Plearn Exam",
+    "heroTitle": "คลังข้อสอบ\u003cspan>เพลินพัฒนา\u003c/span>",
+    "heroSub": "รวมข้อสอบ แบบฝึกหัด และเอกสารเตรียมสอบสำหรับนักเรียนเพลินพัฒนา",
+    "heroBadge": "✦ สำหรับนักเรียนเพลินพัฒนา",
+    "reg": true,
+    "dlLogin": true,
+    "stats": true,
+    "siteBuild": 1780757723007
   },
-  users:[
-    {id:1,name:'Admin Plearn Exam',email:'admin@examhub.com',pass:'admin1234',role:'admin',saved:[],downloads:[]},
-    {id:2,name:'นักเรียน ทดสอบ',email:'student@test.com',pass:'student123',role:'user',saved:[],downloads:[]}
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin Plearn Exam",
+      "email": "admin@examhub.com",
+      "pass": "admin1234",
+      "role": "admin",
+      "saved": [],
+      "downloads": []
+    },
+    {
+      "id": 2,
+      "name": "นักเรียน ทดสอบ",
+      "email": "student@test.com",
+      "pass": "student123",
+      "role": "user",
+      "saved": [],
+      "downloads": []
+    },
+    {
+      "id": 1780752754885,
+      "name": "Pluem11",
+      "email": "pluemfff542@gmail.com",
+      "pass": "Pluem11",
+      "role": "user",
+      "saved": [],
+      "downloads": []
+    }
   ],
-  exams:[],
-  cats:[
-    {id:1,emoji:'📐',name:'คณิตศาสตร์'},
-    {id:2,emoji:'🔬',name:'วิทยาศาสตร์'},
-    {id:3,emoji:'🇬🇧',name:'ภาษาอังกฤษ'},
-    {id:4,emoji:'📖',name:'ภาษาไทย'},
-    {id:5,emoji:'🌏',name:'สังคมศึกษา'},
-    {id:6,emoji:'📋',name:'ทั่วไป'}
+  "exams": [],
+  "cats": [
+    {
+      "id": 1,
+      "emoji": "📐",
+      "name": "คณิตศาสตร์"
+    },
+    {
+      "id": 2,
+      "emoji": "🔬",
+      "name": "วิทยาศาสตร์"
+    },
+    {
+      "id": 3,
+      "emoji": "🇬🇧",
+      "name": "ภาษาอังกฤษ"
+    },
+    {
+      "id": 4,
+      "emoji": "📖",
+      "name": "ภาษาไทย"
+    },
+    {
+      "id": 5,
+      "emoji": "🌏",
+      "name": "สังคมศึกษา"
+    },
+    {
+      "id": 6,
+      "emoji": "📋",
+      "name": "ทั่วไป"
+    }
   ]
 };
 
@@ -789,14 +847,23 @@ var settings={reg:true,dlLogin:true,stats:true};
 // ─── INIT ───
 function init(){
   try{
-    var sd=SG('eh_db'); if(sd){var pd=JSON.parse(sd);db=Object.assign(db,pd);
-    // restore pdf data
+    var useLocalPdf=false;
+    var sd=SG('eh_db'); if(sd){
+      var pd=JSON.parse(sd);
+      var localBuild=(pd.settings&&pd.settings.siteBuild)||0;
+      var embeddedBuild=(db.settings&&db.settings.siteBuild)||0;
+      if(localBuild>=embeddedBuild){
+        db=Object.assign(db,pd);
+        useLocalPdf=true;
+      } else {
+        SR('eh_db');
+      }
+    }
     for(var i=0;i<db.exams.length;i++){
-      var pd2=SG('eh_pdf_'+db.exams[i].id);
+      var pd2=useLocalPdf?SG('eh_pdf_'+db.exams[i].id):null;
       if(pd2) db.exams[i].pdfData=pd2;
       else if(!db.exams[i].pdfData) db.exams[i].pdfData='';
     }
-  }
   }catch(e){}
   try{var su=SG('eh_user'); if(su){CU=JSON.parse(su);}}catch(e){}
   var changed=false;
@@ -879,12 +946,49 @@ function removeSeedExams(){
 function saveDb(){
   syncCurrentUser();
   var slim=JSON.parse(JSON.stringify(db));
+  var storageWarn=false;
   for(var i=0;i<slim.exams.length;i++){
     var pd=slim.exams[i].pdfData;
-    if(pd && pd.length>0){ try{SS('eh_pdf_'+slim.exams[i].id,pd);}catch(e){} }
+    if(pd && pd.length>0){
+      if(!SS('eh_pdf_'+slim.exams[i].id,pd)) storageWarn=true;
+    }
     slim.exams[i].pdfData='';
   }
-  try{SS('eh_db',JSON.stringify(slim));}catch(e){}
+  if(!SS('eh_db',JSON.stringify(slim))) storageWarn=true;
+  if(storageWarn&&CU&&CU.role==='admin'){
+    toast('พื้นที่ browser ไม่พอเก็บ PDF แบบ local ให้กด Export index.html แล้วอัปขึ้น GitHub','w');
+  }
+}
+
+function cloneDbForExport(){
+  var full=JSON.parse(JSON.stringify(db));
+  full.settings=full.settings||{};
+  full.settings.siteBuild=Date.now();
+  return full;
+}
+
+function exportStaticSite(){
+  if(!CU||CU.role!=='admin'){toast('เฉพาะแอดมินเท่านั้น','e');return;}
+  var full=cloneDbForExport();
+  db.settings.siteBuild=full.settings.siteBuild;
+  var root=document.documentElement.cloneNode(true);
+  root.querySelectorAll('.pg').forEach(function(p){p.classList.toggle('on',p.id==='pg-home');});
+  root.querySelectorAll('.overlay').forEach(function(o){o.classList.remove('on');});
+  var html='<!DOCTYPE html>\n'+root.outerHTML;
+  var data=JSON.stringify(full,null,2)
+    .replace(/</g,'\\u003c')
+    .replace(/\u2028/g,'\\u2028')
+    .replace(/\u2029/g,'\\u2029');
+  var next=html.replace(/var db=\{[\s\S]*?\n\};\s*\n\/\/ ─── STATE ───/,'var db='+data+';\n\n// ─── STATE ───');
+  if(next===html){toast('ส่งออกไม่สำเร็จ กรุณาลองรีเฟรชหน้า','e');return;}
+  var blob=new Blob([next],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='index.html';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href);},800);
+  saveDb();
+  toast('Export index.html แล้ว ให้อัปไฟล์นี้ทับบน GitHub','s');
 }
 
 // ─── NAV ───
@@ -1436,6 +1540,9 @@ function saveExam(){
     toast('เพิ่มข้อสอบสำเร็จ ✅','s');
   }
   saveDb(); closeM('examM'); renderManage(); renderStats(); renderDash(); renderHome(); renderExams();
+  if(CU&&CU.role==='admin'){
+    setTimeout(function(){toast('ถ้าต้องให้ผู้ใช้ทุกคนเห็น ให้ Export index.html แล้วอัปขึ้น GitHub','w');},450);
+  }
 }
 
 function confirmDel(id){
@@ -1499,7 +1606,7 @@ function onPdfChange(){
   if(file.type!=='application/pdf'&&file.name.toLowerCase().indexOf('.pdf')<0){
     toast('กรุณาเลือกไฟล์ PDF เท่านั้น','e'); return;
   }
-  if(file.size>20*1024*1024){toast('ไฟล์ใหญ่เกินไป (สูงสุด 20 MB)','e');return;}
+  if(file.size>8*1024*1024){toast('ไฟล์ใหญ่เกินไป (สูงสุด 8 MB)','e');return;}
   var r=new FileReader();
   r.onload=function(ev){
     pendPdfData=ev.target.result; pendPdfName=file.name;
@@ -1543,10 +1650,11 @@ function fmtBytes(b){
 // ─── KICK OFF ───
 init();
 </script>
-</body>
-</html>
 
 
 
 
 
+
+
+</body></html>
